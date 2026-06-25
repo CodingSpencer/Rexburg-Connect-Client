@@ -1,11 +1,21 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import EventCard from "../components/EventCard.svelte";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const sampleEvent = {
+  id: "1",
+  title: "Country Dancing",
+  description: "A fun BYU-I event where students can dance, meet people, and hang out.",
+  location: "BYU-I Center",
+  date: "Friday night",
+  image: "https://placehold.co/600x400",
+  averageRating: 4
+};
 ---
 
 <Layout>
-	<Welcome />
+  <h1>Recent Campus Events</h1>
+  <p>See what students are saying about events around Rexburg.</p>
+
+  <EventCard event={sampleEvent} />
 </Layout>
