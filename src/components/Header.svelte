@@ -6,7 +6,7 @@
 
     <nav>
         <a href="/">Home</a>
-        <a href="/events">Events</a>
+        <a href="/event">Events</a>
         <a href="/profile">Profile</a>
         <a href="/login">Login</a>
     </nav>

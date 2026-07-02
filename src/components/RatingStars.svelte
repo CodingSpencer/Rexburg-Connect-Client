@@ -1,19 +1,26 @@
-<script>
-    export let rating = 0;
-
-    const stars = (num) => {
-        return "★".repeat(Math.round(num)) +
-               "☆".repeat(5 - Math.round(num));
-    };
+<script lang="ts">
+  export let rating = 0;
 </script>
 
-<span class="stars">
-    {stars(rating)}
-</span>
+<div class="stars">
+  {#each Array(5) as _, i}
+    <button
+      type="button"
+      on:click={() => (rating = i + 1)}
+    >
+      {i < rating ? "★" : "☆"}
+    </button>
+  {/each}
+</div>
 
 <style>
-.stars{
-    color:gold;
-    font-size:1.2rem;
-}
+  .stars button {
+    all: unset;
+    background: none;
+    border: none;
+    font-size: 1.7rem;
+    color: gold;
+    cursor: pointer;
+    padding: 0;
+  }
 </style>

@@ -1,11 +1,48 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ReviewCard from "../../components/ReviewCard.svelte";
+import EventCard from "../../components/EventCard.svelte";
 ---
 
 <Layout>
-  <h1>Events</h1>
+  <h1>Event</h1>
+  <!-- <EventCard client:load /> -->
+  <button type="button" id="add-review">Add review</button>
 
-  <p>
-    Browse campus events and read reviews.
-  </p>
+  <div id="review-form">
+    <ReviewCard client:load />
+  </div>
+
+  <script>
+    const addreview = document.getElementById("add-review");
+    const reviewform = document.getElementById("review-form");
+
+    addreview?.addEventListener("click", () => {
+      console.log('clicked add button!')
+      reviewform?.classList.add("visible");
+    });
+  </script>
+
+  <style>
+    #review-form {
+      display: none;
+      margin-bottom: 30px;
+      /* justify-items: center; */
+
+      &.visible {
+        display: block;
+      }
+    }
+
+    #add-review {
+      padding: 0.5rem 1rem;
+      margin: 0.8rem 1rem;
+      border: 1px solid black;
+      border-radius: 3px;
+      background: #f7e2a7;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+  </style>
 </Layout>
