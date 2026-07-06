@@ -4,40 +4,106 @@
   export let event;
 </script>
 
-<div class="card">
+<article class="event-card">
+  <img src={event.image} alt={event.title} class="event-image" />
 
-  <img src={event.image} alt={event.title}>
+  <div class="event-info">
+    <div class="event-header">
+      <h3>{event.title}</h3>
+      <RatingStars rating={event.averageRating} />
+    </div>
 
-  <h2>{event.title}</h2>
+    <p class="event-description">{event.description}</p>
 
-  <p>{event.description}</p>
+    <div class="event-details">
+      <span>📅 {event.date}</span>
+      <span>📍 {event.location}</span>
+      <span>⭐ {event.averageRating}/5</span>
+    </div>
 
-  <p><strong>Location:</strong> {event.location}</p>
-
-  <p><strong>Date:</strong> {event.date}</p>
-
-  <RatingStars rating={event.averageRating}/>
-
-  <button>
-      View Reviews
-  </button>
-
-</div>
+    <a href="/event" class="event-button">View Event</a>
+  </div>
+</article>
 
 <style>
-.card{
-  border:1px solid #ddd;
-  border-radius:12px;
-  overflow:hidden;
-  padding:1rem;
-  max-width:450px;
-}
+  .event-card {
+    display: flex;
+    gap: 1.25rem;
+    border: 1px solid #dbe5f3;
+    border-radius: 18px;
+    padding: 1rem;
+    background: white;
+    box-shadow: 0 4px 12px rgba(15, 44, 92, 0.08);
+    margin-bottom: 2rem;
+  }
 
-img{
-  width:100%;
-}
+  .event-image {
+    width: 180px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 14px;
+    flex-shrink: 0;
+  }
 
-button{
-  margin-top:1rem;
-}
+  .event-info {
+    flex: 1;
+  }
+
+  .event-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  h3 {
+    margin: 0;
+    color: #0f2c5c;
+    font-size: 1.35rem;
+  }
+
+  .event-description {
+    color: #334155;
+    line-height: 1.5;
+    margin: 0.75rem 0;
+  }
+
+  .event-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    color: #475569;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .event-button {
+    display: inline-block;
+    background: #0f2c5c;
+    color: white;
+    padding: 0.55rem 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .event-button:hover {
+    background: #4a90e2;
+  }
+
+  @media (max-width: 700px) {
+    .event-card {
+      flex-direction: column;
+    }
+
+    .event-image {
+      width: 100%;
+      height: 200px;
+    }
+
+    .event-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
 </style>
