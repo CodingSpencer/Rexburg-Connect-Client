@@ -2,20 +2,70 @@
 import Layout from "../layouts/Layout.astro";
 import EventCard from "../components/EventCard.svelte";
 
-const sampleEvent = {
-  id: "1",
-  title: "Country Dancing",
-  description: "A fun BYU-I event where students can dance, meet people, and hang out.",
-  location: "BYU-I Center",
-  date: "Friday night",
-  image: "https://placehold.co/600x400",
-  averageRating: 4
-};
+const upcomingEvents = [
+  {
+    id: "1",
+    title: "Country Dancing",
+    description: "Come dance, meet new people, and hang out with other BYU-I students.",
+    location: "MC Ballroom",
+    date: "Friday Night",
+    image: "https://placehold.co/600x350",
+    averageRating: 4.8
+  },
+  {
+    id: "2",
+    title: "Date Night Activity",
+    description: "A fun group date activity with games, food, and student activities.",
+    location: "BYU-I Center",
+    date: "Saturday",
+    image: "https://placehold.co/600x350",
+    averageRating: 4.5
+  },
+  {
+    id: "3",
+    title: "Rexburg Rodeo",
+    description: "A classic Rexburg event with friends, food, and a fun western vibe.",
+    location: "Rexburg Fairgrounds",
+    date: "Next Weekend",
+    image: "https://placehold.co/600x350",
+    averageRating: 4.7
+  }
+];
 ---
 
 <Layout>
-  <h1>Recent Campus Events</h1>
-  <p>See what students are saying about events around Rexburg.</p>
+  <section class="home-hero">
+    <div class="hero-content">
+      <img src="/images/rexy-con.png" alt="Rexburg Connect" class="hero-image" />
 
-  <EventCard event={sampleEvent} />
+      <p class="eyebrow">Upcoming Events • Reviews • Free Activities</p>
+
+      <h1>Discover what’s happening around Rexburg.</h1>
+
+      <p class="hero-text">
+        Find fun events, read student feedback, and choose what sounds worth going to.
+      </p>
+
+      <div class="search-section">
+        <input 
+          id="event-search" 
+          type="text" 
+          placeholder="Search for an event..." 
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section">
+    <div class="section-heading">
+      <h2>Events</h2>
+      <a href="/event">View all</a>
+    </div>
+
+    <div class="event-grid">
+      {upcomingEvents.map((event) => (
+        <EventCard event={event} client:load />
+      ))}
+    </div>
+  </section>
 </Layout>
