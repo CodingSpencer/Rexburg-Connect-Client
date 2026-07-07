@@ -1,15 +1,26 @@
-<script>
-    export let rating = 0;
-  
-    $: roundedRating = Math.round(rating);
-    $: stars = "★".repeat(roundedRating) + "☆".repeat(5 - roundedRating);
-  </script>
-  
-  <span class="stars">{stars}</span>
-  
-  <style>
-    .stars {
-      color: #facc15;
-      font-size: 1.2rem;
-    }
-  </style>
+<script lang="ts">
+  export let rating = 0;
+</script>
+
+<div class="stars">
+  {#each Array(5) as _, i}
+    <button
+      type="button"
+      on:click={() => (rating = i + 1)}
+    >
+      {i < rating ? "★" : "☆"}
+    </button>
+  {/each}
+</div>
+
+<style>
+  .stars button {
+    all: unset;
+    background: none;
+    border: none;
+    font-size: 1.7rem;
+    color: gold;
+    cursor: pointer;
+    padding: 0;
+  }
+</style>

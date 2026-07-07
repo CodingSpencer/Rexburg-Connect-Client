@@ -1,53 +1,77 @@
-<script>
+<script lang="ts">
   import RatingStars from "./RatingStars.svelte";
-
-  export let review;
+  // let { review }: { review: Review } = $props();
+  let rating = 0;
 </script>
 
-<article class="review-card">
-  <div class="review-top">
-    <div>
-      <h3>{review.eventTitle}</h3>
-      <p>Reviewed by {review.username}</p>
-    </div>
+<form action="/" id="review">
+  <label for="comment">Comment</label>
+  <input type="text" id="comment"/>
 
-    <RatingStars rating={review.rating} />
-  </div>
+  <label>Rating</label>
+  <RatingStars bind:rating />
 
-  <p class="review-text">{review.text}</p>
-</article>
+  <button>Post Review</button>
+</form>
 
 <style>
-  .review-card {
-    border: 1px solid #dbe5f3;
-    border-radius: 16px;
-    padding: 1.25rem;
-    background: white;
-    box-shadow: 0 4px 12px rgba(15, 44, 92, 0.08);
-  }
-
-  .review-top {
+  #review {
+    max-width: 420px;
     display: flex;
-    justify-content: space-between;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1.5rem;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 
-  h3 {
-    margin: 0;
-    color: #0f2c5c;
+  #review label {
+    font-weight: 600;
+    color: #333;
   }
 
-  p {
-    margin: 0.25rem 0 0;
+  #review input,
+  #review textarea {
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
   }
 
-  .review-top p {
-    color: #64748b;
-    font-size: 0.9rem;
+  #review input:focus,
+  #review textarea:focus {
+    outline: none;
+    border-color: #f5b301;
+    box-shadow: 0 0 0 3px rgba(245, 179, 1, 0.2);
   }
 
-  .review-text {
-    margin-top: 1rem;
-    line-height: 1.5;
+  #review > button {
+    padding: 0.8rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background: #f5b301;
+    color: #222;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  #review button:hover {
+    background: #d99d00;
   }
 </style>
+
+
+<!-- <article class="review-card">
+    <div class="review-header">
+    <h3>Username: </h3>
+    <RatingStars />
+  </div>
+  <p>Placeholder for comments</p> -->
+<!-- </article> -->
+<!-- <h3>{review.username}</h3> -->
+<!-- <RatingStars rating={review.rating} /> -->
+<!-- <p>{review.text}</p> -->
+<!-- {review.image && <img src={review.image} alt="Review image" />} -->
