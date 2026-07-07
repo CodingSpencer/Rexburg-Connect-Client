@@ -1,10 +1,12 @@
-<!-- Working on at the end, for user profile updates -->
 ---
 import Layout from "../../layouts/Layout.astro";
+import ProfilePanel from "../../components/ProfilePanel.svelte";
 ---
 
 <Layout>
   <h1>My Profile</h1>
 
   <p>Your reviews and account information.</p>
+
+  <ProfilePanel client:load />
 </Layout>
