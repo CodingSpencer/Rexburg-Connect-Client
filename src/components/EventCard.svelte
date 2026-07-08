@@ -21,8 +21,11 @@
       <span>⭐ {event.averageRating}/5</span>
     </div>
 
-    <a href="/event" class="event-button">View Event</a>
-  </div>
+    <a href={`/event/${event.id}`} class="event-button">
+      View Event
+    </a>
+    
+    </div>
 </article>
 
 <style>

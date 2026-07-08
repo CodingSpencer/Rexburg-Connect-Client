@@ -43,23 +43,25 @@
   #review input:focus,
   #review textarea:focus {
     outline: none;
-    border-color: #f5b301;
-    box-shadow: 0 0 0 3px rgba(245, 179, 1, 0.2);
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
   }
 
   #review > button {
     padding: 0.8rem 1rem;
     border: none;
-    border-radius: 8px;
-    background: #f5b301;
-    color: #222;
-    font-weight: 600;
+    border-radius: 12px;
+    background: #0f2c5c;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.2s ease;
   }
 
-  #review button:hover {
-    background: #d99d00;
+  #review > button:hover {
+    background: #4a90e2;
+    transform: translateY(-1px);
   }
 </style>
 

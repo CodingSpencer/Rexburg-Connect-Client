@@ -1,45 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import EventCard from "../components/EventCard.svelte";
-
-const upcomingEvents = [
-  {
-    id: "1",
-    title: "Country Dancing",
-    description: "Come dance, meet new people, and hang out with other BYU-I students.",
-    location: "MC Ballroom",
-    date: "Friday Night",
-    image: "/images/dancing.png",
-    averageRating: 4.8
-  },
-  {
-    id: "2",
-    title: "Date Night Activity",
-    description: "A fun group date activity with games, food, and student activities.",
-    location: "BYU-I Center",
-    date: "Saturday",
-    image: "/images/date-night.jpg",
-    averageRating: 4.5
-  },
-  {
-    id: "3",
-    title: "Rexburg Rodeo",
-    description: "A classic Rexburg event with friends, food, and a fun western vibe.",
-    location: "Rexburg Fairgrounds",
-    date: "Next Weekend",
-    image: "/images/rodeo.jpg",
-    averageRating: 4.7
-  },
-  {
-    id: "4",
-    title: "Roller Skating",
-    description: "Go roller skating every Saturday with friends for a fun and chill night out.",
-    location: "Rexburg",
-    date: "Every Saturday",
-    image: "/images/skating.png",
-    averageRating: 4.6
-  }
-];
+import { events } from "../data/events";
 ---
 
 <Layout>
@@ -72,8 +34,8 @@ const upcomingEvents = [
     </div>
 
     <div class="event-grid">
-      {upcomingEvents.map((event) => (
-        <EventCard event={event} client:load />
+      {events.map((event) => (
+        <EventCard event={event} />
       ))}
     </div>
   </section>
