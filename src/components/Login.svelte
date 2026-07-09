@@ -62,7 +62,7 @@
     <form on:submit={handleSubmit} class="login-form">
       <label for="username"
         >Username
-        <input type="text" bind:value={username} required />
+        <input type="text" bind:value={username}  />
       </label>
       <label>
         Password
@@ -76,7 +76,7 @@
         </label>
         <label for="age"
           >Age
-          <input type="number" bind:value={age} required />
+          <input type="number" bind:value={age}  />
         </label>
       </div>
 
