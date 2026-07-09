@@ -1,7 +1,10 @@
-const DEFAULT_AUTH_BASE_URL = "http://localhost:3001/api/auth";
+function getBackendBaseUrl() {
+    const configuredUrl = import.meta.env.PUBLIC_BACKEND_URL || import.meta.env.BACKEND_URL || "https://rexburg-connect-server.onrender.com";
+    return configuredUrl.replace(/\/$/, "");
+}
 
 function getAuthBaseUrl() {
-    return import.meta.env.PUBLIC_AUTH_API_URL || DEFAULT_AUTH_BASE_URL;
+    return `${getBackendBaseUrl()}/api/auth`;
 }
 
 async function requestAuth(path, options = {}) {
