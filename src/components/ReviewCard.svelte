@@ -8,7 +8,7 @@
   <label for="comment">Comment</label>
   <input type="text" id="comment"/>
 
-  <label>Rating</label>
+  <label for="rating">Rating</label>
   <RatingStars bind:rating />
 
   <button>Post Review</button>
