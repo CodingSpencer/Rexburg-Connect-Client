@@ -7,8 +7,8 @@
 
   let email = $state("");
   let password = $state("");
-  let username = $state("");
-  let age = $state("");
+  let profile_name = $state("");
+  let name = $state("");
   let loading = $state(false);
   let error = $state("");
   let visible = $state(false);
@@ -60,33 +60,41 @@
     </button>
   {:else}
     <form on:submit={handleSubmit} class="login-form">
-      <label for="username"
-        >Username
-        <input type="text" bind:value={username} required />
+      <label for="name" class="sign-up" class:visible
+        >First and Last Name
+        <input type="text" bind:value={name} id="name" />
       </label>
-      <label>
-        Password
-        <input bind:value={password} type="password" required />
+      <label for="profile_name"
+        >Profile Name
+        <input type="text" bind:value={profile_name} />
       </label>
-
-      <div class="sign-up" class:visible = {visible}>
-        <label>
-          Email
-          <input bind:value={email} type="email" required />
-        </label>
-        <label for="age"
-          >Age
-          <input type="number" bind:value={age} required />
-        </label>
-      </div>
+      <label for="email" class="sign-up" class:visible
+        >Email
+        <input bind:value={email} type="email" id="email" required />
+      </label>
+      <label for="password"
+        >Password
+        <input bind:value={password} type="password" id="password" required />
+      </label>
 
       {#if error}
         <p class="error">{error}</p>
       {/if}
 
       <div class="login-buttons">
-        <button type="button" id="new-account" on:click = {() => visible = true}>Create new account</button
-        >
+        {#if !visible}
+          <button
+            type="button"
+            id="new-account"
+            on:click={() => (visible = true)}>Create new account</button
+          >
+        {:else}
+          <button
+            type="button"
+            id="new-account"
+            on:click={() => (visible = false)}>Use Existing Account</button
+          >
+        {/if}
         <button type="submit" disabled={loading}>
           {loading ? "Signing in..." : "Login"}
         </button>
@@ -111,7 +119,7 @@
   }
 
   .visible {
-    display: block;
+    display: flex;
   }
 
   .auth-card {
