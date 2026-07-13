@@ -7,21 +7,33 @@ import { events } from "../data/events";
 <Layout>
   <section class="home-hero">
     <div class="hero-content">
-      <img src="/images/rexy-con.png" alt="Rexburg Connect" class="hero-image" />
+      <img
+        src="/images/rexy-con.png"
+        alt="Rexburg Connect"
+        class="hero-image"
+      />
 
-      <p class="eyebrow">Upcoming Events • Reviews • Free Activities</p>
+      <p class="eyebrow">
+        Upcoming Events • Reviews • Free Activities
+      </p>
 
       <h1>Discover what’s happening around Rexburg.</h1>
 
       <p class="hero-text">
-        Find fun events, read student feedback, and choose what sounds worth going to.
+        Find fun events, read student feedback, and choose what sounds worth
+        going to.
       </p>
 
       <div class="search-section">
-        <input 
-          id="event-search" 
-          type="text" 
-          placeholder="Search for an event..." 
+        <label for="event-search" class="sr-only">
+          Search events
+        </label>
+
+        <input
+          id="event-search"
+          type="search"
+          placeholder="Search by event, location, or date..."
+          autocomplete="off"
         />
       </div>
     </div>
@@ -29,14 +41,97 @@ import { events } from "../data/events";
 
   <section class="home-section">
     <div class="section-heading">
-      <h2>Events</h2>
+      <div>
+        <h2>Events</h2>
+
+        <p id="search-results-text" class="search-results-text">
+          Showing all events
+        </p>
+      </div>
+
       <a href="/event">View all</a>
     </div>
 
     <div class="event-grid">
-      {events.map((event) => (
-        <EventCard event={event} />
-      ))}
+      {
+        events.map((event) => (
+          <div
+            class="searchable-event"
+            data-title={event.title.toLowerCase()}
+            data-description={event.description.toLowerCase()}
+            data-location={event.location.toLowerCase()}
+            data-date={event.date.toLowerCase()}
+          >
+            <EventCard event={event} />
+          </div>
+        ))
+      }
+    </div>
+
+    <div id="no-search-results" class="no-search-results" hidden>
+      <h3>No events found</h3>
+
+      <p>
+        Try searching for a different event, location, or date.
+      </p>
     </div>
   </section>
+
+  <script>
+    const searchInput = document.querySelector("#event-search");
+    const eventCards = document.querySelectorAll(".searchable-event");
+    const resultsText = document.querySelector("#search-results-text");
+    const noResultsMessage = document.querySelector("#no-search-results");
+
+    function filterEvents() {
+      if (!(searchInput instanceof HTMLInputElement)) {
+        return;
+      }
+
+      const searchTerm = searchInput.value.trim().toLowerCase();
+      let visibleEventCount = 0;
+
+      eventCards.forEach((card) => {
+        if (!(card instanceof HTMLElement)) {
+          return;
+        }
+
+        const title = card.dataset.title ?? "";
+        const description = card.dataset.description ?? "";
+        const location = card.dataset.location ?? "";
+        const date = card.dataset.date ?? "";
+
+        const searchableText = `
+          ${title}
+          ${description}
+          ${location}
+          ${date}
+        `;
+
+        const matchesSearch = searchableText.includes(searchTerm);
+
+        card.hidden = !matchesSearch;
+
+        if (matchesSearch) {
+          visibleEventCount++;
+        }
+      });
+
+      if (resultsText instanceof HTMLElement) {
+        if (searchTerm === "") {
+          resultsText.textContent = "Showing all events";
+        } else if (visibleEventCount === 1) {
+          resultsText.textContent = "1 event found";
+        } else {
+          resultsText.textContent = `${visibleEventCount} events found`;
+        }
+      }
+
+      if (noResultsMessage instanceof HTMLElement) {
+        noResultsMessage.hidden = visibleEventCount !== 0;
+      }
+    }
+
+    searchInput?.addEventListener("input", filterEvents);
+  </script>
 </Layout>
