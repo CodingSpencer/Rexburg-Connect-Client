@@ -21,17 +21,35 @@
     loading = true;
     error = "";
 
-    const { data, error: authError } = await authClient.signIn.email({
-      email,
-      password,
-    });
+    if (visible) {
+      // Sign-up flow
+      const { data, error: authError } = await authClient.signUp.email({
+        email,
+        password,
+        name,
+      });
 
-    loading = false;
+      loading = false;
 
-    if (authError) {
-      error = authError.message || "Login failed.";
-    } else if (data) {
-      window.location.assign("/profile");
+      if (authError) {
+        error = authError.message || "Sign-up failed.";
+      } else if (data) {
+        window.location.assign("/profile");
+      }
+    } else {
+      // Login flow
+      const { data, error: authError } = await authClient.signIn.email({
+        email,
+        password,
+      });
+
+      loading = false;
+
+      if (authError) {
+        error = authError.message || "Login failed.";
+      } else if (data) {
+        window.location.assign("/profile");
+      }
     }
   }
 
@@ -48,27 +66,27 @@
 
 <div class="auth-card">
   <!-- Use $sessionStore.data to check if a user is logged in -->
-  <h2>{$sessionStore.data?.user ? "Welcome back" : "Login"}</h2>
+  <h2>{$sessionStore.data?.user ? "Welcome back" : visible ? "Create New Account" : "Login"}</h2>
 
   {#if $sessionStore.data?.user}
     <p>
       Signed in as {$sessionStore.data.user.name ||
         $sessionStore.data.user.email}
     </p>
-    <button type="button" class="secondary-button" on:click={handleSignOut}>
+    <button type="button" class="secondary-button" onclick={handleSignOut}>
       {loading ? "Signing out..." : "Sign out"}
     </button>
   {:else}
-    <form on:submit={handleSubmit} class="login-form">
+    <form onsubmit={handleSubmit} class="login-form">
       <label for="name" class="sign-up" class:visible
         >First and Last Name
-        <input type="text" bind:value={name} id="name" />
+        <input type="text" bind:value={name} id="name" required={visible} />
       </label>
-      <label for="profile_name"
+      <label for="profile_name" class="sign-up" class:visible
         >Profile Name
-        <input type="text" bind:value={profile_name} />
+        <input type="text" bind:value={profile_name} required={visible} />
       </label>
-      <label for="email" class="sign-up" class:visible
+      <label for="email"
         >Email
         <input bind:value={email} type="email" id="email" required />
       </label>
@@ -86,17 +104,17 @@
           <button
             type="button"
             id="new-account"
-            on:click={() => (visible = true)}>Create new account</button
+            onclick={() => (visible = true)}>Create new account</button
           >
         {:else}
           <button
             type="button"
             id="new-account"
-            on:click={() => (visible = false)}>Use Existing Account</button
+            onclick={() => (visible = false)}>Use Existing Account</button
           >
         {/if}
         <button type="submit" disabled={loading}>
-          {loading ? "Signing in..." : "Login"}
+          {loading ? (visible ? "Creating account..." : "Signing in...") : (visible ? "Create New Account" : "Login")}
         </button>
       </div>
     </form>
