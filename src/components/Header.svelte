@@ -21,7 +21,7 @@
 
   <nav class="nav-links">
     <a href="/">HOME</a>
-    <a href="/event">EVENTS</a>
+    <!-- <a href="/event">EVENTS</a> -->
 
     <!-- Use $sessionStore.data to access the session information -->
     {#if $sessionStore.data?.user}
