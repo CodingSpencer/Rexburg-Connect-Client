@@ -1,18 +1,26 @@
 <script lang="ts">
   import RatingStars from "./RatingStars.svelte";
-  // let { review }: { review: Review } = $props();
+  import { authClient } from "../lib/auth-client";
+
   let rating = 0;
+  const sessionStore = authClient.useSession();
+
+  $: if (!$sessionStore) {
+    window.location.href = "/login";
+  }
 </script>
 
-<form action="/" id="review">
-  <label for="comment">Comment</label>
-  <input type="text" id="comment"/>
+{#if $sessionStore}
+  <form action="/" id="review">
+    <label for="comment">Comment</label>
+    <input type="text" id="comment" />
 
-  <label for="rating">Rating</label>
-  <RatingStars bind:rating />
+    <label for="rating">Rating</label>
+    <RatingStars bind:rating />
 
-  <button>Post Review</button>
-</form>
+    <button>Post Review</button>
+  </form>
+{/if}
 
 <style>
   #review {
@@ -64,16 +72,3 @@
     transform: translateY(-1px);
   }
 </style>
-
-
-<!-- <article class="review-card">
-    <div class="review-header">
-    <h3>Username: </h3>
-    <RatingStars />
-  </div>
-  <p>Placeholder for comments</p> -->
-<!-- </article> -->
-<!-- <h3>{review.username}</h3> -->
-<!-- <RatingStars rating={review.rating} /> -->
-<!-- <p>{review.text}</p> -->
-<!-- {review.image && <img src={review.image} alt="Review image" />} -->

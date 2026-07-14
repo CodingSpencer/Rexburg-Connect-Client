@@ -15,8 +15,11 @@
 
   // This is a Nano Store under the hood, so it keeps its classic '$' auto-subscription
   const sessionStore = authClient.useSession();
+  console.log($sessionStore);
 
   async function handleSubmit(event) {
+    console.log("submit");
+
     event.preventDefault();
     loading = true;
     error = "";
