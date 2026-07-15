@@ -1,12 +1,11 @@
 // Use relative path when deployed (Netlify proxy handles /api/* → Render)
 // Use absolute URL for local development (localhost:4321 → localhost:5001)
-const isLocal = import.meta.env.DEV || (typeof window !== "undefined" && window.location.hostname === "localhost");
-
+// Note: import.meta.env.DEV is safe during build; window is NOT available at SSR time
 function getBackendBaseUrl() {
-    if (isLocal) {
+    if (import.meta.env.DEV) {
         return (import.meta.env.PUBLIC_BACKEND_URL || import.meta.env.BACKEND_URL || "http://localhost:5001").replace(/\/$/, "");
     }
-    // Deployed: use relative path so Netlify proxy forwards to Render
+    // Deployed (production build): use relative path so Netlify proxy forwards to Render
     return "";
 }
 
