@@ -1,4 +1,4 @@
-## Rexburg Connect Client
+## Rexburg Connect
 
 - [Netlify](https://rexburg-connect-client.netlify.app/)
 - [Render](https://rexburg-connect-server.onrender.com)
