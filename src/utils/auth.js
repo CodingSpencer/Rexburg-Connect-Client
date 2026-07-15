@@ -1,4 +1,10 @@
 function getBackendBaseUrl() {
+    // In development, use the Astro dev server so the Vite proxy handles /api
+    // This keeps everything same-origin so cookies work with sameSite: "lax"
+    if (import.meta.env.DEV) {
+        return "http://localhost:4321";
+    }
+    // In production, use the deployed backend
     const configuredUrl = import.meta.env.PUBLIC_BACKEND_URL || import.meta.env.BACKEND_URL || "https://rexburg-connect-server.onrender.com";
     return configuredUrl.replace(/\/$/, "");
 }
