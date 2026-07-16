@@ -2,44 +2,49 @@
   import EventAverageRating from "./EventAverageRating.svelte";
 
   export let event;
+
+  function viewEvent() {
+    window.location.href = `/event/${event.id}`;
+  }
 </script>
 
-<article class="event-card">
-  <img
-    src={event.image}
-    alt={event.title}
-    class="event-image"
-  />
+<button class="card" on:click={viewEvent}>
+  <article class="event-card">
+    <img src={event.image} alt={event.title} class="event-image" />
 
-  <div class="event-info">
-    <div class="event-header">
-      <h3>{event.title}</h3>
+    <div class="event-info">
+      <div class="event-header">
+        <h3>{event.title}</h3>
 
-      <EventAverageRating
-        eventId={event.mongoId}
-        fallbackRating={event.averageRating}
-      />
+        <EventAverageRating
+          eventId={event.mongoId}
+          fallbackRating={event.averageRating}
+        />
+      </div>
+
+      <p class="event-description">
+        {event.description}
+      </p>
+
+      <div class="event-details">
+        <span>📅 {event.date}</span>
+        <span>📍 {event.location}</span>
+      </div>
+
+      <!-- <a href={`/event/${event.id}`} class="event-button"> View Event </a> -->
     </div>
-
-    <p class="event-description">
-      {event.description}
-    </p>
-
-    <div class="event-details">
-      <span>📅 {event.date}</span>
-      <span>📍 {event.location}</span>
-    </div>
-
-    <a
-      href={`/event/${event.id}`}
-      class="event-button"
-    >
-      View Event
-    </a>
-  </div>
-</article>
+  </article>
+</button>
 
 <style>
+  .card {
+    all: unset;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+
   .event-card {
     display: flex;
     gap: 1.25rem;
@@ -49,6 +54,13 @@
     background: white;
     box-shadow: 0 4px 12px rgba(15, 44, 92, 0.08);
     margin-bottom: 2rem;
+    align-items: center;
+  }
+
+  .event-card:hover {
+    box-shadow: 1px 1px 8px #718096;
+    transition: transform 0.2s ease-in-out;
+    transform: scale(1.02);
   }
 
   .event-image {
@@ -99,6 +111,7 @@
     border-radius: 10px;
     text-decoration: none;
     font-weight: 700;
+    float: right;
   }
 
   .event-button:hover {
