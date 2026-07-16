@@ -2,7 +2,6 @@
   import { onMount } from "svelte";
   import { authClient } from "../lib/auth-client.js";
   import { getSession, signInWithEmail, signOut } from "../utils/auth.js";
-  import { ValueListNode } from "kysely";
   import { on } from "svelte/events";
 
   let email = $state("");
@@ -30,7 +29,7 @@
         email,
         password,
         name,
-        profileName,
+        profileName: profile_name,
       });
 
       loading = false;
