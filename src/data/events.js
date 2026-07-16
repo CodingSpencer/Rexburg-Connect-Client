@@ -20,7 +20,7 @@ export const events = [
 
   {
     id: "2",
-    mongoId: "",
+    mongoId: "6a590d7b9fce4636237b1ce8",
     title: "Date Night Activity",
     description:
       "A fun group date activity with games, food, and student activities.",
@@ -39,7 +39,7 @@ export const events = [
 
   {
     id: "3",
-    mongoId: "",
+    mongoId: "6a590de79fce4636237b1cea",
     title: "Rexburg Rodeo",
     description:
       "A classic Rexburg event with friends, food, and a fun western vibe.",
@@ -58,7 +58,7 @@ export const events = [
 
   {
     id: "4",
-    mongoId: "",
+    mongoId: "6a590e0b9fce4636237b1cec",
     title: "Roller Skating",
     description:
       "Go roller skating every Saturday with friends for a fun and chill night out.",

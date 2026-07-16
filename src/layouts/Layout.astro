@@ -15,10 +15,30 @@ import "../styles/global.css";
   <body>
     <Header client:load />
 
-    <main>
-      <slot />
-    </main>
+    <div class="page">
+      <main>
+        <slot />
+      </main>
+    </div>
 
     <Footer />
   </body>
 </html>
+
+<style>
+  html,
+  body {
+    min-height: 100%;
+    margin: 0;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1;
+  }
+</style>
