@@ -1,11 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import ReviewCard from "../../components/ReviewCard.svelte";
+import EventReviews from "../../components/EventReviews.svelte";
 import { events } from "../../data/events";
-import { authClient } from "../../lib/auth-client";
-
-const sessionStore = authClient.useSession();
-
 
 export function getStaticPaths() {
   return events.map((event) => ({
@@ -14,77 +10,70 @@ export function getStaticPaths() {
 }
 
 const { id } = Astro.params;
-const selectedEvent = events.find((event) => event.id === id) || events[0];
+const selectedEvent =
+  events.find((event) => event.id === id) || events[0];
 ---
 
 <Layout>
-    <section class="event-detail-page">
-      <a href="/" class="back-link">← Back to events</a>
-  
-      <article class="event-detail-card">
-        <img 
-          src={selectedEvent.image} 
-          alt={selectedEvent.title} 
-          class="event-detail-image" 
-        />
-  
-        <div class="event-detail-content">
-          <div class="event-detail-header">
-            <div>
-              <h1>{selectedEvent.title}</h1>
-              <p class="rating-text">⭐ {selectedEvent.averageRating}/5</p>
-            </div>
-  
-            <button type="button" id="add-review">Add Review</button>
-          </div>
-  
-          <p class="event-long-description">
-            {selectedEvent.longDescription}
-          </p>
-  
-          <div class="event-detail-info">
-            <span>📅 {selectedEvent.date}</span>
-            <span>📍 {selectedEvent.location}</span>
+  <section class="event-detail-page">
+    <a href="/" class="back-link">← Back to events</a>
+
+    <article class="event-detail-card">
+      <img
+        src={selectedEvent.image}
+        alt={selectedEvent.title}
+        class="event-detail-image"
+      />
+
+      <div class="event-detail-content">
+        <div class="event-detail-header">
+          <div>
+            <h1>{selectedEvent.title}</h1>
+
+            <p class="rating-text">
+              ⭐ {selectedEvent.averageRating}/5
+            </p>
           </div>
         </div>
-      </article>
-  
-      <section class="gallery-section">
-        <h2>Event Photos</h2>
-  
-        <div class="gallery-grid">
-          {selectedEvent.gallery.map((photo) => (
-            <img src={photo} alt={selectedEvent.title} />
-          ))}
-        </div>
-      </section>
-  
-      <div id="review-modal" class="review-modal">
-        <div class="review-modal-content">
-          <button type="button" id="close-review" class="close-review">×</button>
-          <h2>Add a Review</h2>
-          <ReviewCard client:load />
+
+        <p class="event-long-description">
+          {selectedEvent.longDescription}
+        </p>
+
+        <div class="event-detail-info">
+          <span>📅 {selectedEvent.date}</span>
+          <span>📍 {selectedEvent.location}</span>
         </div>
       </div>
+    </article>
+
+    <section class="gallery-section">
+      <h2>Event Photos</h2>
+
+      <div class="gallery-grid">
+        {selectedEvent.gallery.map((photo) => (
+          <img
+            src={photo}
+            alt={`${selectedEvent.title} event`}
+          />
+        ))}
+      </div>
     </section>
-  
-    <script>
-        const addReview = document.getElementById("add-review");
-        const reviewModal = document.getElementById("review-modal");
-        const closeReview = document.getElementById("close-review");
-      
-        addReview?.addEventListener("click", () => {
-          reviewModal?.classList.add("visible");
-        });
-      
-        closeReview?.addEventListener("click", () => {
-          reviewModal?.classList.remove("visible");
-        });
-      
-        reviewModal?.addEventListener("click", (event) => {
-          if (event.target === reviewModal) {
-            reviewModal.classList.remove("visible");
-          }
-        });
-      </script>
-  </Layout>
+
+    {
+      selectedEvent.mongoId ? (
+        <EventReviews
+          client:load
+          eventId={selectedEvent.mongoId}
+        />
+      ) : (
+        <section class="reviews-unavailable">
+          <h2>Reviews</h2>
+          <p>
+            Reviews are not available for this event yet.
+          </p>
+        </section>
+      )
+    }
+  </section>
+</Layout>
