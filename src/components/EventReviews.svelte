@@ -77,7 +77,7 @@
       <p class="eyebrow">Student feedback</p>
       <h2>Reviews</h2>
 
-      <p class="rating-summary">
+      <div class="rating-summary">
         <RatingStars
           rating={averageRating}
           editable={false}
@@ -90,7 +90,7 @@
           ({reviewCount}
           {reviewCount === 1 ? " review" : " reviews"})
         </span>
-      </p>
+      </div>
     </div>
 
     {#if $sessionStore.data?.user}
@@ -129,7 +129,7 @@
         <article class="review-item">
           <div class="review-top">
             <div>
-              <h3>{review.userName}</h3>
+              <h3>{review.profileName || review.userName}</h3>
               <small>{formatDate(review.createdAt)}</small>
             </div>
 
@@ -200,12 +200,6 @@
     gap: 0.45rem;
     margin: 0.65rem 0 0;
     color: #667085;
-  }
-
-  .summary-stars,
-  .review-stars {
-    color: #f4b400;
-    letter-spacing: 0.08rem;
   }
 
   .add-review-button {
