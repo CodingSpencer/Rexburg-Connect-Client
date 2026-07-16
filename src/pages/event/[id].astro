@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import EventReviews from "../../components/EventReviews.svelte";
+import EventAverageRating from "../../components/EventAverageRating.svelte";
 import { events } from "../../data/events";
 
 export function getStaticPaths() {
@@ -30,9 +31,12 @@ const selectedEvent =
           <div>
             <h1>{selectedEvent.title}</h1>
 
-            <p class="rating-text">
-              ⭐ {selectedEvent.averageRating}/5
-            </p>
+            <EventAverageRating
+                client:load
+                eventId={selectedEvent.mongoId}
+                fallbackRating={selectedEvent.averageRating}
+                showReviewCount={true}
+              />
           </div>
         </div>
 
