@@ -26,7 +26,7 @@
     <!-- Use $sessionStore.data to access the session information -->
     {#if $sessionStore.data?.user}
       <a href="/profile">PROFILE</a>
-      <button type="button" class="nav-button" on:click={handleSignOut} disabled={loading}>
+      <button type="button" class="nav-button" onclick={handleSignOut} disabled={loading}>
         {loading ? "LOGGING OUT..." : "LOG OUT"}
       </button>
     {:else}

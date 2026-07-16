@@ -8,7 +8,7 @@
   }
 </script>
 
-<button class="card" on:click={viewEvent}>
+<button class="card" onclick={viewEvent}>
   <article class="event-card">
     <img src={event.image} alt={event.title} class="event-image" />
 
@@ -101,21 +101,6 @@
     color: #475569;
     font-size: 0.95rem;
     margin-bottom: 1rem;
-  }
-
-  .event-button {
-    display: inline-block;
-    background: #0f2c5c;
-    color: white;
-    padding: 0.55rem 1rem;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 700;
-    float: right;
-  }
-
-  .event-button:hover {
-    background: #4a90e2;
   }
 
   @media (max-width: 700px) {

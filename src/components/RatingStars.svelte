@@ -40,7 +40,7 @@
         role="radio"
         aria-checked={starNumber === rating}
         aria-label={`${starNumber} out of 5 stars`}
-        on:click={() => chooseRating(starNumber)}
+        onclick={() => chooseRating(starNumber)}
       >
         {starNumber <= rating ? "★" : "☆"}
       </button>
