@@ -6,6 +6,8 @@
       type Review,
     } from "../lib/reviews";
   
+    import RatingStars from "./RatingStars.svelte";
+
     export let eventId: string;
   
     let reviews: Review[] = [];
@@ -73,10 +75,11 @@
         <h2>Reviews</h2>
   
         <p class="rating-summary">
-          <span class="summary-stars">
-            {"★".repeat(Math.round(averageRating))}
-            {"☆".repeat(5 - Math.round(averageRating))}
-          </span>
+            <RatingStars
+            rating={averageRating}
+            editable={false}
+            ariaLabel={`${averageRating.toFixed(1)} out of 5 stars`}
+          />
   
           <strong>{averageRating.toFixed(1)}</strong>
   
@@ -117,13 +120,11 @@
                 <small>{formatDate(review.createdAt)}</small>
               </div>
   
-              <span
-                class="review-stars"
-                aria-label={`${review.rating} out of 5 stars`}
-              >
-                {"★".repeat(review.rating)}
-                {"☆".repeat(5 - review.rating)}
-              </span>
+              <RatingStars
+                rating={review.rating}
+                editable={false}
+                ariaLabel={`${review.rating} out of 5 stars`}
+                />
             </div>
   
             <p>{review.comment}</p>

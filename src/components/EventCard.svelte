@@ -1,31 +1,42 @@
 <script>
-  import RatingStars from "./RatingStars.svelte";
+  import EventAverageRating from "./EventAverageRating.svelte";
 
   export let event;
 </script>
 
 <article class="event-card">
-  <img src={event.image} alt={event.title} class="event-image" />
+  <img
+    src={event.image}
+    alt={event.title}
+    class="event-image"
+  />
 
   <div class="event-info">
     <div class="event-header">
       <h3>{event.title}</h3>
-      <RatingStars rating={event.averageRating} />
+
+      <EventAverageRating
+        eventId={event.mongoId}
+        fallbackRating={event.averageRating}
+      />
     </div>
 
-    <p class="event-description">{event.description}</p>
+    <p class="event-description">
+      {event.description}
+    </p>
 
     <div class="event-details">
       <span>📅 {event.date}</span>
       <span>📍 {event.location}</span>
-      <span>⭐ {event.averageRating}/5</span>
     </div>
 
-    <a href={`/event/${event.id}`} class="event-button">
+    <a
+      href={`/event/${event.id}`}
+      class="event-button"
+    >
       View Event
     </a>
-    
-    </div>
+  </div>
 </article>
 
 <style>
