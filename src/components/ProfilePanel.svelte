@@ -89,6 +89,33 @@
     let editReviewForm = $state({ rating: 0, comment: "" });
     let reviewActionError = $state("");
 
+    // Whether the "delete account" confirmation prompt is showing.
+    let confirmingDelete = $state(false);
+    let deleteError = $state("");
+
+    function requestDeleteAccount() {
+        deleteError = "";
+        confirmingDelete = true;
+    }
+
+    function cancelDeleteAccount() {
+        confirmingDelete = false;
+        deleteError = "";
+    }
+
+    async function confirmDeleteAccount() {
+        deleteError = "";
+        try {
+            await authClient.deleteUser({ callbackURL: "/" });
+            // better-auth clears the session cookie on success
+            window.location.href = "/";
+        } catch (err) {
+            console.error(err);
+            deleteError = err.message || "Failed to delete account.";
+            confirmingDelete = false;
+        }
+    }
+
     function startEditReview(review) {
         reviewActionError = "";
         editingReviewId = review._id;
@@ -288,7 +315,25 @@
 
         <div class="danger-zone">
             <button class="secondary-button" type="button" onclick={() => authClient.logout()}>Sign out</button>
-            <button class="danger-button" type="button" onclick={() => authClient.revoke()}>Delete account</button>
+
+            {#if confirmingDelete}
+                <div class="delete-confirm">
+                    <p class="delete-confirm-text">Are you sure? This permanently deletes your account and cannot be undone.</p>
+                    {#if deleteError}
+                        <p class="reviews-error reviews-status">{deleteError}</p>
+                    {/if}
+                    <div class="review-actions">
+                        <button class="secondary-button" type="button" onclick={cancelDeleteAccount}>Cancel</button>
+                        <button class="danger-button" type="button" onclick={confirmDeleteAccount}>Yes, delete</button>
+                    </div>
+                </div>
+            {:else}
+                <button
+                    class="danger-button"
+                    type="button"
+                    onclick={requestDeleteAccount}
+                >Delete account</button>
+            {/if}
         </div>
     </section>
 {:else}
