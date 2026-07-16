@@ -30,6 +30,7 @@
         email,
         password,
         name,
+        profileName,
       });
 
       loading = false;
