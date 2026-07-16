@@ -62,8 +62,7 @@ import { events } from "../data/events";
             data-location={event.location.toLowerCase()}
             data-date={event.date.toLowerCase()}
           >
-            <EventCard event={event} />
-          </div>
+        <EventCard client:load event={event} />          </div>
         ))
       }
     </div>
