@@ -12,7 +12,10 @@ import { events } from "../../data/events";
 
     <div class="event-grid">
       {events.map((event) => (
-        <EventCard event={event} />
+        <EventCard
+          client:load
+          event={event}
+        />
       ))}
     </div>
   </section>

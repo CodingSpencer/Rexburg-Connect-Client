@@ -3,6 +3,13 @@
   export let editable = true;
   export let ariaLabel = "";
 
+  $: normalizedRating = Math.min(
+    5,
+    Math.max(0, Number(rating) || 0)
+  );
+
+  $: fillPercentage = (normalizedRating / 5) * 100;
+
   function chooseRating(selectedRating: number) {
     if (!editable) {
       return;
@@ -10,54 +17,51 @@
 
     rating = selectedRating;
   }
-
-  function getFillPercentage(starNumber: number): number {
-    const amountFilled = rating - (starNumber - 1);
-
-    if (amountFilled >= 1) {
-      return 100;
-    }
-
-    if (amountFilled <= 0) {
-      return 0;
-    }
-
-    return Math.round(amountFilled * 100);
-  }
 </script>
 
-<div
-  class:editable
-  class="stars"
-  role={editable ? "radiogroup" : "img"}
-  aria-label={ariaLabel || `${rating.toFixed(1)} out of 5 stars`}
->
-  {#each [1, 2, 3, 4, 5] as starNumber}
-    {#if editable}
+{#if editable}
+  <div
+    class="stars editable-stars"
+    role="radiogroup"
+    aria-label={ariaLabel || "Choose a rating out of 5 stars"}
+  >
+    {#each [1, 2, 3, 4, 5] as starNumber}
       <button
         type="button"
-        class:selected={starNumber <= rating}
+        class:selected={starNumber <= normalizedRating}
         role="radio"
-        aria-checked={starNumber === rating}
+        aria-checked={starNumber === normalizedRating}
         aria-label={`${starNumber} out of 5 stars`}
-        onclick={() => chooseRating(starNumber)}
+        on:click={() => chooseRating(starNumber)}
       >
-        {starNumber <= rating ? "★" : "☆"}
+        ★
       </button>
-    {:else}
-      <span class="display-star" aria-hidden="true">
-        <span class="empty-star">★</span>
+    {/each}
+  </div>
+{:else}
+  <div
+    class="display-rating"
+    role="img"
+    aria-label={
+      ariaLabel ||
+      `${normalizedRating.toFixed(1)} out of 5 stars`
+    }
+  >
+    <span class="star-row empty-stars" aria-hidden="true">
+      ★★★★★
+    </span>
 
-        <span
-          class="filled-star"
-          style={`width: ${getFillPercentage(starNumber)}%`}
-        >
-          ★
-        </span>
+    <span
+      class="filled-stars-wrapper"
+      style:width={`${fillPercentage}%`}
+      aria-hidden="true"
+    >
+      <span class="star-row filled-stars">
+        ★★★★★
       </span>
-    {/if}
-  {/each}
-</div>
+    </span>
+  </div>
+{/if}
 
 <style>
   .stars {
@@ -66,47 +70,71 @@
     line-height: 1;
   }
 
-  button {
+  /* Editable review-form stars */
+
+  .editable-stars button {
     all: unset;
     color: #d0d5dd;
     cursor: pointer;
     font-size: 1.7rem;
     line-height: 1;
-    padding: 0;
   }
 
-  button.selected {
+  .editable-stars button.selected {
     color: #f4b400;
   }
 
-  button:hover,
-  button:focus-visible {
+  .editable-stars button:hover,
+  .editable-stars button:focus-visible {
     color: #f4b400;
   }
 
-  button:focus-visible {
+  .editable-stars button:focus-visible {
     border-radius: 4px;
     outline: 2px solid #4a90e2;
     outline-offset: 2px;
   }
 
-  .display-star {
+  /* Read-only average stars */
+
+  .display-rating {
     position: relative;
     display: inline-block;
+    flex-shrink: 0;
+    width: 8.5rem;
+    height: 1.7rem;
+    overflow: hidden;
     font-size: 1.7rem;
     line-height: 1;
+    white-space: nowrap;
   }
 
-  .empty-star {
+  .star-row {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 8.5rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.7rem;
+    letter-spacing: 0;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .empty-stars {
     color: #d0d5dd;
   }
 
-  .filled-star {
+  .filled-stars-wrapper {
     position: absolute;
-    inset: 0 auto 0 0;
-    display: block;
+    top: 0;
+    left: 0;
+    height: 100%;
     overflow: hidden;
+  }
+
+  .filled-stars {
     color: #f4b400;
-    white-space: nowrap;
   }
 </style>

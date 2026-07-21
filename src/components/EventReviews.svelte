@@ -34,17 +34,26 @@
     errorMessage = "";
 
     try {
-      const data = await getEventReviews(eventId);
+  const data = await getEventReviews(eventId);
 
-      reviews = data.reviews;
-      reviewCount = data.reviewCount;
-      averageRating = data.averageRating;
-    } catch (error) {
-      errorMessage =
-        error instanceof Error ? error.message : "Unable to load reviews.";
-    } finally {
-      isLoading = false;
-    }
+  reviews = Array.isArray(data.reviews)
+    ? data.reviews
+    : [];
+
+  reviewCount = Number(data.reviewCount) || 0;
+
+  averageRating = Math.min(
+    5,
+    Math.max(0, Number(data.averageRating) || 0)
+  );
+} catch (error) {
+  errorMessage =
+    error instanceof Error
+      ? error.message
+      : "Unable to load reviews.";
+} finally {
+  isLoading = false;
+}
   }
 
   function openReviewModal() {
@@ -78,12 +87,14 @@
       <h2>Reviews</h2>
 
       <div class="rating-summary">
-        <RatingStars
-          rating={averageRating}
-          editable={false}
-          ariaLabel={`${averageRating.toFixed(1)} out of 5 stars`}
-        />
-
+        {#key averageRating}
+          <RatingStars
+            rating={averageRating}
+            editable={false}
+            ariaLabel={`${averageRating.toFixed(1)} out of 5 stars`}
+          />
+        {/key}
+      
         <strong>{averageRating.toFixed(1)}</strong>
 
         <span>
