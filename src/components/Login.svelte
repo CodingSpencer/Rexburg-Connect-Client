@@ -12,7 +12,6 @@
   let error = $state("");
   let visible = $state(false);
 
-  // This is a Nano Store under the hood, so it keeps its classic '$' auto-subscription
   const sessionStore = authClient.useSession();
   console.log($sessionStore);
 
@@ -40,7 +39,6 @@
         window.location.assign("/profile");
       }
     } else {
-      // Login flow
       const { data, error: authError } = await authClient.signIn.email({
         email,
         password,
@@ -68,7 +66,6 @@
 </script>
 
 <div class="auth-card">
-  <!-- Use $sessionStore.data to check if a user is logged in -->
   <h2>{$sessionStore.data?.user ? "Welcome back" : visible ? "Create New Account" : "Login"}</h2>
 
   {#if $sessionStore.data?.user}

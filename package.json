@@ -9,13 +9,29 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "npm test:unit",
+    "test:unit": "vitest run --config vitest.config.js",
+    "test:unit:watch": "vitest",
+    "test:unit:solutions": "vitest run --config=vitest.solutions.config.ts",
+    "test:integration": "playwright test",
+    "test:integration:ui": "playwright test --ui",
+    "test:integration:solutions": "playwright test --config=playwright.solutions.config.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@sveltejs/vite-plugin-svelte": "^7.2.0",
+    "@testing-library/jest-dom": "^7.0.0",
+    "@testing-library/svelte": "^5.4.2",
+    "@types/node": "^26.1.0",
+    "jsdom": "^29.1.1",
+    "svelte": "^5.56.7",
+    "vitest": "^4.1.10"
   },
   "dependencies": {
     "@astrojs/svelte": "^9.0.0",
     "astro": "^7.0.2",
     "better-auth": "^1.6.23",
-    "svelte": "^5.56.4",
     "typescript": "^6.0.3"
   }
 }
