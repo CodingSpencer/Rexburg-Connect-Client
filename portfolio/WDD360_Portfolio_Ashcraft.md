@@ -2,6 +2,7 @@
 
 ### Personal Review (Video)
 - [Self Review](https://youtu.be/l-9AmhTw7G8)
+- [Self Review Project](https://youtu.be/nYpINEeMaDY)
 
 ### Sleep Outside Links
 - [Netlify](https://wdd360team2sleepoutside.netlify.app/)
